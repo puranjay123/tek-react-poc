@@ -49,7 +49,8 @@ const App: React.FC = () => {
   return (
     <div>
       <h1>Search Employee Competency</h1>
-      {data.length > 0 ? <MultiSearch data={data} /> : <p>Loading data...</p>}
+      <MultiSearch data={data} />
+      {data.length === 0 && <p>Loading data...</p>}
     </div>
   );
 };
