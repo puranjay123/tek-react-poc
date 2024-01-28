@@ -1,0 +1,2 @@
+[submodule "path/to/submodule"]
+	url = https://github.com/puranjay123/tek-react-poc.git
