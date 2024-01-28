@@ -1,40 +1,54 @@
-How to run the server
-`npm run dev`
-
-Important libaries to install
-
-vite@4.1.0
-bootstrap
-
-1. Prioritize the search bar for loading if the data is not the search bar should load on the home screen
-2. Add a search button Near the search bar
-3. 
-4. Add multiple words functionality in the search bar
-5. Add 2 function options which is the Best fit option
-6. Add a Download Button
-7. SUggestion in the search bar
-8. connect the database
-9. show the database in a tabular format
-
-best fit, avialibilty,
-
-skills-mandatory
-availaiilty-mandatory
-rating-madnatory
 
 
-skills- should be multiple value.
-best fit, averrage button - implement the function.
+## Running the Server
+
+To run the server, follow these commands:
+
+1. For Node.js server:
+   ```bash
+   npm start
+   ```
+
+2. For Flask server:
+   ```bash
+   python app.py
+   ```
+
+## Features
+
+### Completed Tasks
+
+1. **Search Bar Priority:** The search bar now loads on the home screen if no data is present. ✅
+2. **Search Button Addition:** Added a search button near the search bar. ✅
+3. **Multiple Words Functionality:** This feature is pending. ⛔
+4. **Best Fit Option (Todo):** To be implemented.
+5. **Download Button (Todo):** To be implemented.
+6. **Suggestion in Search Bar (Todo):** To be implemented.
+7. **Database Display:** Data is shown in a tabular format. ✅
+
+### Error/Bug Fixes and Suggestions
+
+1. **API Data Visibility Issue:**
+   - Data is being fetched from the API but is not visible in the UI. Only half of the fields are displayed in a random order, making it difficult to understand the structure of the tables.
+   ![image](https://github.com/puranjay123/tek-react-poc/assets/55429956/8655dc6f-9f69-4370-a57a-39400347daa3)
+
+2. **React Components for Table Rendering:**
+   - Consider leveraging React components for rendering tables. This can simplify the process and ensure a consistent tabular format without manual interventions.
+
+3. **Handling Multiple Words:**
+   - Multiple words functionality might not be necessary, as separate rows for distinct skills can be displayed for a particular employee.
+
+4. **Predefined Suggestions:**
+   - Suggestions in the search bar could be predefined or retrieved from the database for easier implementation.
 
 
-create a download button,
 
 
-suggestion in seacrh bar,
-search -button,
 
 
-data should be proper format.
+
+
+
 
 
 
