@@ -23,11 +23,28 @@
 
     {% if results %}
     <h2>Search Results:</h2>
-    <ul>
-        {% for result in results %}
-        <li>{{ result }}</li>
-        {% endfor %}
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Resource Name</th>
+                <th>Job Code</th>
+                <!-- ... (add other headers) ... -->
+                <th>Interest Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result['Employee ID'] }}</td>
+                <td>{{ result['Resource Name'] }}</td>
+                <td>{{ result['Job Code'] }}</td>
+                <!-- ... (add other data) ... -->
+                <td>{{ result['Interest Level'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endif %}
 </body>
 </html>

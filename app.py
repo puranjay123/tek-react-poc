@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='C:\\Users\\Asus\\Desktop\\tek-poc\\tek-react-poc')
 
 @app.route('/')
 def index():
@@ -14,8 +14,26 @@ def search():
     location = request.form.get('location')
 
     # Create your SQLite connection and cursor
-    conn = sqlite3.connect('C:\Users\pkwatra\OneDrive - ALLEGIS GROUP/RESOURCE PLANNER HELPER/resourceplanner.db')
-    cursor = conn.cursor()
+    conn = sqlite3.connect('C:\\Users\\Asus\\Desktop\\tek-poc\\tek-react-poc\\Data\\resourceplanner.db')
+
+    #**********
+    try:
+    # Try executing a simple query, e.g., fetching the version
+        cursor = conn.cursor()
+        cursor.execute("SELECT sqlite_version();")
+
+        # If the execution is successful, the database is connected
+        print("Database connected successfully.")
+
+    # You can perform other database operations here
+
+    except sqlite3.Error as e:
+        # If there is an error, print the error message
+        print("Database connection error:", e)
+
+    #*******
+    # cursor = conn.cursor()
+
 
     # Build and execute the SQL query based on the provided parameters
     # query = "SELECT * FROM competency WHERE Competency_Code=" + skills + " AND Years_of_Work_Experience="+experience+" AND location_Name="+location
