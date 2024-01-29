@@ -1,4 +1,8 @@
-
+Libraries to install:
+1. Flask
+2. react
+3. Python
+4. flask_cors
 
 ## Running the Server
 
