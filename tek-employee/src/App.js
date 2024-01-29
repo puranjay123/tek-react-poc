@@ -16,6 +16,11 @@ function App() {
         experience,
         location,
       });
+      const headers = {
+        'Content-Type': 'application/json',
+        
+      }
+
 
       // Check if the response contains a 'data' property and it's an array
       if (response.data && Array.isArray(response.data)) {
@@ -75,21 +80,22 @@ function App() {
           <table border="1">
           <thead>
   <tr>
+    <th>load_date</th>
     <th>Employee ID</th>
     <th>Resource Name</th>
-    <th>Job Code</th>
-    <th>Job Code Description</th>
-    <th>Dept</th>
-    <th>Department Name</th>
-    <th>Supv ID</th>
     <th>Supervisor Name</th>
     <th>RM Role</th>
     <th>Pool Name</th>
-    <th>Practice</th>
     <th>Practice Name</th>
-    <th>Location</th>
     <th>Location Name</th>
-    <th>Personnel Status</th>
+    <th>Email</th>
+    <th>Competency Code</th>
+    <th>Competency Desciption</th>
+    <th>years acquired</th>
+    <th>years used</th>
+    <th>years of experience</th>
+    <th>Rating</th>
+    {/* <th>Personnel Status</th>
     <th>Email</th>
     <th>Hire Date</th>
     <th>Competency Code</th>
@@ -98,11 +104,11 @@ function App() {
     <th>Year Last Used</th>
     <th>Years of Work Experience</th>
     <th>Rating</th>
-    <th>Interest Level</th>
+    <th>Interest Level</th> */}
   </tr>
 </thead>
 <tbody>
-  {results.map((result) => (
+  {/* {results.map((result) => (
     <tr key={result['Employee ID']}>
       <td>{result['Employee ID']}</td>
       <td>{result['Resource Name']}</td>
@@ -129,7 +135,32 @@ function App() {
       <td>{result['Rating']}</td>
       <td>{result['Interest Level']}</td>
     </tr>
-  ))}
+  ))} */}
+
+  {
+    results.map((result) => {
+      return(
+        <tr>
+          <td>{result[0]}</td>
+          <td>{result[1]}</td>
+          <td>{result[2]}</td>
+          <td>{result[3]}</td>
+          <td>{result[4]}</td>
+          <td>{result[5]}</td>
+          <td>{result[6]}</td>
+          <td>{result[7]}</td>
+          <td>{result[8]}</td>
+          <td>{result[9]}</td>
+          <td>{result[10]}</td>
+          <td>{result[11]}</td>
+          <td>{result[12]}</td>
+          <td>{result[13]}</td>
+          <td>{result[14]}</td>
+          <td>{result[15]}</td>
+        </tr>
+      );
+    })
+  }
 </tbody>
           </table>
         </div>
