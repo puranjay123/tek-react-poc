@@ -4,7 +4,7 @@ from flask import jsonify
 
 import sqlite3
 
-app = Flask(__name__,template_folder = 'D:\\POC github\\tek-react-poc\\tek-employee\\public')
+app = Flask(__name__,template_folder = 'D:\\reactdeepthi\\tek-react-poc\\tek-employee\\public')
 CORS(app,resources={r"/*": {"Access-Control-Allow-Origin": "*"}})  # Enable CORS for all routes in the app
 
 @app.route('/')
@@ -28,11 +28,11 @@ def search():
         print("Location:", location)
 
         # Create your SQLite connection and cursor
-        conn = sqlite3.connect('C:\\Users\\pkwatra\\OneDrive - ALLEGIS GROUP\\RESOURCE PLANNER HELPER\\resourceplanner.db')
+        conn = sqlite3.connect('D:\\resourceplanner.db')
         cursor = conn.cursor()
 
         # Build and execute the SQL query based on the provided parameters
-        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience>=? AND location_Name=? LIMIT 10"
+        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience>=? AND location_Name=? "
         cursor.execute(query, (skills, experience, location))
         results = cursor.fetchall()
         print("This is result",results)
