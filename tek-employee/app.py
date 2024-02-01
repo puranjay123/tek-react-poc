@@ -28,11 +28,11 @@ def search():
         print("Location:", location)
 
         # Create your SQLite connection and cursor
-        conn = sqlite3.connect('D:\\POC github\\tek-react-poc\\Data\\resourceplanner.db')
+        conn = sqlite3.connect('C:\\Users\\pkwatra\\OneDrive - ALLEGIS GROUP\\RESOURCE PLANNER HELPER\\resourceplanner.db')
         cursor = conn.cursor()
 
         # Build and execute the SQL query based on the provided parameters
-        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience=? AND location_Name=? LIMIT 10"
+        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience>=? AND location_Name=? LIMIT 10"
         cursor.execute(query, (skills, experience, location))
         results = cursor.fetchall()
         print("This is result",results)
