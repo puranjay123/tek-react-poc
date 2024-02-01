@@ -116,8 +116,9 @@
         </form>
         
         {results.length > 0 && (
-          <div>
+          <div classname = 'results-container'>
             <h2>Search Results:</h2>
+            <div className = "results-box">
             <table className="results-table">
               <thead>
               <tr>
@@ -163,6 +164,7 @@
                 ))}
               </tbody>
             </table>
+          </div>
           </div>
         )}
       </div>

@@ -12,6 +12,17 @@
   margin-bottom: 20px;
 }
 
+.results-container {
+  margin-top: 20px;
+}
+
+.results-box {
+  max-height: 400px; /* Set your preferred max height */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
 .results-table {
   width: 100%;
   border-collapse: collapse;
