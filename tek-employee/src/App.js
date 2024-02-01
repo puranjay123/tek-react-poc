@@ -7,6 +7,7 @@
     const [experience, setExperience] = useState('');
     const [location, setLocation] = useState('');
     const [results, setResults] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const sortAndHighlight = (data) => {
       // Sort data based on Rating and Experience
@@ -35,8 +36,8 @@
 
       try {
         const response = await axios.post('http://localhost:5000/search', {
-          skills,
-          experience,
+          skills: skills.toUpperCase(),
+          experience, 
           location,
         });
         const headers = {
@@ -48,6 +49,7 @@
         // Check if the response contains a 'data' property and it's an array
         if (response.data && Array.isArray(response.data)) {
           setResults(response.data);
+          setCurrentPage(1);
         } else {
           // Handle the case where the response does not contain an array
           console.error('Invalid response format:', response);
@@ -71,7 +73,18 @@
         console.warn('No results to sort and highlight.');
       }
     };
-    
+
+    const previous = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+
+    //const next = () => {
+     // if (currentPage < totalPages) {
+      //  setCurrentPage(currentPage + 1);
+     // }
+    //};
 
     useEffect(() => {
       // Fetch data when component mounts
@@ -112,7 +125,8 @@
 
           <button type="submit">Search</button>
           <button type="button" onClick={handleBestFitClick}>Best Fit</button>
-      
+          <button type="previous">PREVIOUS</button>
+          <button type="next">NEXT</button>
         </form>
         
         {results.length > 0 && (

@@ -32,7 +32,7 @@ def search():
         cursor = conn.cursor()
 
         # Build and execute the SQL query based on the provided parameters
-        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience>=? AND location_Name=? LIMIT 10"
+        query = "SELECT * FROM competency WHERE Competency_Code=? AND Years_of_Work_Experience>=? AND location_Name=? "
         cursor.execute(query, (skills, experience, location))
         results = cursor.fetchall()
         print("This is result",results)
