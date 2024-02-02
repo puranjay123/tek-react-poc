@@ -42,12 +42,12 @@ function App() {
         setResults(response.data);
 
         // Initialize Fuse with the updated skill data
-        const options = {
-          keys: ['skills'],
-          includeScore: true,
-        };
-        const fuseInstance = new Fuse(response.data, options);
-        setFuse(fuseInstance);
+        // const options = {
+        //   keys: ['skills'],
+        //   includeScore: true,
+        // };
+        // const fuseInstance = new Fuse(response.data, options);
+        // setFuse(fuseInstance);
       } else {
         console.error('Invalid response format:', response);
       }
@@ -97,12 +97,17 @@ function App() {
     };
     const fuseInstance = new Fuse(results, options);
     setFuse(fuseInstance);
+    console.log("I am in the use effect loop")
+
   }, [results]);
+
 
   const handleSkillInputChange = (input) => {
     if (fuse) {
       const skillSearchResults = fuse.search(input);
+      console.log("This is my skill search results",skillSearchResults)
       const filteredResults = skillSearchResults.map((result) => result.item);
+      console.log("This is my filtered results",filteredResults)
       setResults(filteredResults);
     }
   };
