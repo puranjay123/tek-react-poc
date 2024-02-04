@@ -1,3 +1,11 @@
+issue List:
+05/24
+* If I am seacrhing multiple skills and there is a thrshold which skills you want to give more priority than we have to decide that as well
+we were checking if any of the skills had a matching score above 80% for a given competency code. This means that if at least one skill had a score above the threshold, the competency code would be included in fuzzy_results. However, this might lead to cases where one skill has a good match, but others don't.
+
+
+
+
 Libraries to install:
 1. Flask
 2. react
