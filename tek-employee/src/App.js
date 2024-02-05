@@ -3,6 +3,8 @@ import axios from 'axios';
 import './App.css';
 import * as XLSX from 'xlsx';
 import Fuse from 'fuse.js';
+import Select from 'react-select';
+
 // import Select from "react-select";
 // import SearchBar from '.';
 
@@ -15,8 +17,57 @@ function App() {
 
   // const optionList = [
   //   {value:,label:}
-  // ];
 
+  //   {value:,label:}
+  // ];
+  const locationOptions = [
+    { value: '7437 Race Rd.', label: '7437 Race Rd.' },
+    { value: 'Atlanta Downtown, GA', label: 'Atlanta Downtown, GA' },
+    { value: 'Atlanta North, GA', label: 'Atlanta North, GA' },
+    { value: 'Austin, TX', label: 'Austin, TX' },
+    { value: 'Baltimore, MD', label: 'Baltimore, MD' },
+    { value: 'Bangalore-EcoWorld', label: 'Bangalore-EcoWorld' },
+    { value: 'Charlotte, NC', label: 'Charlotte, NC' },
+    { value: 'Chicago Apps, IL', label: 'Chicago Apps, IL' },
+    { value: 'Chicago/Downers Grove, IL', label: 'Chicago/Downers Grove, IL' },
+    { value: 'Dallas Solution Center #2', label: 'Dallas Solution Center #2' },
+    { value: 'Dallas, TX', label: 'Dallas, TX' },
+    { value: 'Denver North, CO', label: 'Denver North, CO' },
+    { value: 'Denver, CO', label: 'Denver, CO' },
+    { value: 'East Dallas, TX', label: 'East Dallas, TX' },
+    { value: 'Ft. Worth, TX', label: 'Ft. Worth, TX' },
+    { value: 'Houston, TX', label: 'Houston, TX' },
+    { value: 'Hyderabad, India', label: 'Hyderabad, India' },
+    { value: 'Indianapolis, IN', label: 'Indianapolis, IN' },
+    { value: 'Los Angeles, CA', label: 'Los Angeles, CA' },
+    { value: 'Louisville, KY', label: 'Louisville, KY' },
+    { value: 'Memphis, TN', label: 'Memphis, TN' },
+    { value: 'Miami, FL', label: 'Miami, FL' },
+    { value: 'Minneapolis. MN', label: 'Minneapolis. MN' },
+    { value: 'Mississauga, ON', label: 'Mississauga, ON' },
+    { value: 'Montreal, Canada', label: 'Montreal, Canada' },
+    { value: 'Nashville, TN', label: 'Nashville, TN' },
+    { value: 'New York City, NY - APPS', label: 'New York City, NY - APPS' },
+    { value: 'Northern VA Apps, VA', label: 'Northern VA Apps, VA' },
+    { value: 'Northern VA, VA', label: 'Northern VA, VA' },
+    { value: 'Philadelphia, PA', label: 'Philadelphia, PA' },
+    { value: 'Pittsburgh, PA', label: 'Pittsburgh, PA' },
+    { value: 'Portland,OR', label: 'Portland,OR' },
+    { value: 'Radnor, PA - TGS', label: 'Radnor, PA - TGS' },
+    { value: 'Raleigh Downtown, NC', label: 'Raleigh Downtown, NC' },
+    { value: 'Raleigh, NC', label: 'Raleigh, NC' },
+    { value: 'San Diego, CA', label: 'San Diego, CA' },
+    { value: 'Santa Clara, CA - FCS', label: 'Santa Clara, CA - FCS' },
+    { value: 'Seattle South, WA', label: 'Seattle South, WA' },
+    { value: 'Silicon Valley, CA', label: 'Silicon Valley, CA' },
+    { value: 'St.Louis, MO', label: 'St.Louis, MO' },
+    { value: 'Tampa, FL', label: 'Tampa, FL' },
+    { value: 'Thousand Oaks, CA', label: 'Thousand Oaks, CA' },
+    { value: 'Toronto, ON', label: 'Toronto, ON' },
+    { value: 'Walnut Creek, CA', label: 'Walnut Creek, CA' },
+    { value: 'Wash., DC', label: 'Wash., DC' },
+  ];
+  
   const sortAndHighlight = (data) => {
     data.sort((a, b) => {
       const ratingComparison = b[14] - a[14];
@@ -121,7 +172,7 @@ function App() {
     <div className="app-container">
       <h1>Resource Planner for Employees</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="skills">Skills:</label>
+        <label htmlFor="skills"><br />Skills:      </label>
         <input
           type="text"
           name="skills"
@@ -131,24 +182,26 @@ function App() {
             setSkills(e.target.value);
             handleSkillInputChange(e.target.value);
           }}
+          style={{ marginLeft: '40px' }} 
         />
 
-        <label htmlFor="experience">Experience:</label>
+        <label htmlFor="experience"><br />Experience:   </label>
         <input
           type="text"
           name="experience"
           id="experience"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
+          
         />
 
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          name="location"
-          id="location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+        <label htmlFor="location"><br />Location:</label>
+        <Select
+        options={locationOptions}
+        value={locationOptions.find((option) => option.value === location)}
+        onChange={(selectedOption) => setLocation(selectedOption.value)}
+        styles={{ control: (provided) => ({ ...provided, width: '190px' })  }} // Adjust the width as needed
+        
         />
 
         <button type="submit" style={{ marginRight: '1rem' }}>

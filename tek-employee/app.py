@@ -26,7 +26,7 @@ def search():
         print("Experience:", experience)
         print("Location:", location)
 
-        # skill_list = [skill.strip() for skill in skills.split(',')]
+        
 
         conn = sqlite3.connect('C:\\Users\\pkwatra\\OneDrive - ALLEGIS GROUP\\RESOURCE PLANNER HELPER\\resourceplanner.db')
         cursor = conn.cursor()
@@ -38,31 +38,27 @@ def search():
 
         # Fuzzy matching for skills
         fuzzy_results = []
-        for result in results:
-            competency_code = result[9]  # Assuming Competency_Code is the second column
-            match, score = process.extractOne(skills, [competency_code])
-            # print("This is the match",match)
-            print("this is the score",score)
+        # for result in results:
+        #     competency_code = result[9]  # Assuming Competency_Code is the second column
+        #     match, score = process.extractOne(skills, [competency_code])
+        #     # print("This is the match",match)
+        #     print("this is the score",score)
             
-            # set threshold whatever kumran sir told later now its 80% high accuracy.
-            if score >= 80:
-                fuzzy_results.append(result)
+        #     # set threshold whatever kumran sir told later now its 80% high accuracy.
+        #     if score >= 80: # change this to 60 later 
+        #         fuzzy_results.append(result)
 
         # include this code if we want to match all the skills with the required threshold
         # Fuzzy matching for each skill
+        skill_list = [skill.strip() for skill in skills.split(',')]
+        for result in results:
+            competency_code = result[9]  # Assuming Competency_Code is the second column
+            skill_matches = [process.extractOne(skill, [competency_code]) for skill in skill_list]
 
-        # for result in results:
-        #     competency_code = result[9]  # Assuming Competency_Code is the second column
-        #     skill_matches = [process.extractOne(skill, [competency_code]) for skill in skill_list]
-
-        #     # Check if all skills have a score above the threshold
-        #     if all(score >= 80 for _, score in skill_matches):
-        #         fuzzy_results.append(result)
-                #*******************************************
-
-
-
-                
+            # Check if all skills have a score above the threshold
+            if all(score >= 80 for _, score in skill_matches):
+                fuzzy_results.append(result)
+                #*************************************
 
         print("Fuzzy Search Results:", fuzzy_results)
 
