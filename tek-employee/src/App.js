@@ -184,7 +184,7 @@ function App() {
           }}
           style={{ marginLeft: '40px' }} 
         />
-
+  
         <label htmlFor="experience"><br />Experience:   </label>
         <input
           type="text"
@@ -192,18 +192,16 @@ function App() {
           id="experience"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
-          
         />
-
+  
         <label htmlFor="location"><br />Location:</label>
         <Select
-        options={locationOptions}
-        value={locationOptions.find((option) => option.value === location)}
-        onChange={(selectedOption) => setLocation(selectedOption.value)}
-        styles={{ control: (provided) => ({ ...provided, width: '190px' })  }} // Adjust the width as needed
-        
+          options={locationOptions}
+          value={locationOptions.find((option) => option.value === location)}
+          onChange={(selectedOption) => setLocation(selectedOption.value)}
+          styles={{ control: (provided) => ({ ...provided, width: '190px' }) }}
         />
-
+  
         <button type="submit" style={{ marginRight: '1rem' }}>
           Search
         </button>
@@ -214,8 +212,8 @@ function App() {
           Download
         </button>
       </form>
-
-      {results.length > 0 && (
+  
+      {results.length > 0 ? (
         <div className="results-container">
           <h2>Search Results:</h2>
           <div className="results-box">
@@ -224,12 +222,9 @@ function App() {
                 <tr>
                   <th>Employee ID</th>
                   <th>Resource Name</th>
-
                   <th>years of experience</th>
                   <th>Rating</th>
                   <th>load_date</th>
-                  
-                  
                   <th>Supervisor Name</th>
                   <th>RM Role</th>
                   <th>Pool Name</th>
@@ -240,7 +235,6 @@ function App() {
                   <th>Competency Desciption</th>
                   <th>years acquired</th>
                   <th>years used</th>
-                  
                 </tr>
               </thead>
               <tbody>
@@ -252,14 +246,11 @@ function App() {
                       color: result.highlight ? 'black' : 'inherit',
                     }}
                   >
-
                     <td>{result[1]}</td>
                     <td>{result[2]}</td>
                     <td>{result[13]}</td>
                     <td>{result[14]}</td>
                     <td>{result[0]}</td>
-                    
-                    
                     <td>{result[3]}</td>
                     <td>{result[4]}</td>
                     <td>{result[5]}</td>
@@ -270,17 +261,19 @@ function App() {
                     <td>{result[10]}</td>
                     <td>{result[11]}</td>
                     <td>{result[12]}</td>
-                    
-                    {/* <td>{result[15]}</td> */}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
+      ) : (
+        <div className="no-results-message">
+          <p>No data available</p>
+        </div>
       )}
     </div>
   );
-}
+  }
 
 export default App;
