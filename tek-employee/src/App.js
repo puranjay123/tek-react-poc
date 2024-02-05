@@ -3,7 +3,8 @@ import axios from 'axios';
 import './App.css';
 import * as XLSX from 'xlsx';
 import Fuse from 'fuse.js';
-import SearchBar from '.';
+// import Select from "react-select";
+// import SearchBar from '.';
 
 function App() {
   const [skills, setSkills] = useState('');
@@ -11,6 +12,10 @@ function App() {
   const [location, setLocation] = useState('');
   const [results, setResults] = useState([]);
   const [fuse, setFuse] = useState(null);
+
+  // const optionList = [
+  //   {value:,label:}
+  // ];
 
   const sortAndHighlight = (data) => {
     data.sort((a, b) => {
@@ -105,7 +110,7 @@ function App() {
   const handleSkillInputChange = (input) => {
     if (fuse) {
       const skillSearchResults = fuse.search(input);
-      console.log("This is my skill search results",skillSearchResults)
+      // console.log("This is my skill search results",skill)
       const filteredResults = skillSearchResults.map((result) => result.item);
       console.log("This is my filtered results",filteredResults)
       setResults(filteredResults);
@@ -164,9 +169,14 @@ function App() {
             <table className="results-table">
               <thead>
                 <tr>
-                  <th>load_date</th>
                   <th>Employee ID</th>
                   <th>Resource Name</th>
+
+                  <th>years of experience</th>
+                  <th>Rating</th>
+                  <th>load_date</th>
+                  
+                  
                   <th>Supervisor Name</th>
                   <th>RM Role</th>
                   <th>Pool Name</th>
@@ -177,8 +187,7 @@ function App() {
                   <th>Competency Desciption</th>
                   <th>years acquired</th>
                   <th>years used</th>
-                  <th>years of experience</th>
-                  <th>Rating</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -190,9 +199,14 @@ function App() {
                       color: result.highlight ? 'black' : 'inherit',
                     }}
                   >
-                    <td>{result[0]}</td>
+
                     <td>{result[1]}</td>
                     <td>{result[2]}</td>
+                    <td>{result[13]}</td>
+                    <td>{result[14]}</td>
+                    <td>{result[0]}</td>
+                    
+                    
                     <td>{result[3]}</td>
                     <td>{result[4]}</td>
                     <td>{result[5]}</td>
@@ -203,9 +217,8 @@ function App() {
                     <td>{result[10]}</td>
                     <td>{result[11]}</td>
                     <td>{result[12]}</td>
-                    <td>{result[13]}</td>
-                    <td>{result[14]}</td>
-                    <td>{result[15]}</td>
+                    
+                    {/* <td>{result[15]}</td> */}
                   </tr>
                 ))}
               </tbody>
