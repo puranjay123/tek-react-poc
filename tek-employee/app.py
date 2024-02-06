@@ -35,17 +35,18 @@ def search():
         query = "SELECT * FROM competency WHERE Years_of_Work_Experience >= ? AND location_Name LIKE ?"
         cursor.execute(query, (experience, f'%{location}%'))
         results = cursor.fetchall()
-
+        skill_list = [skill.strip() for skill in skills.split(',')]
+        print("this is my skill list",skill_list)
         # Fuzzy matching for skills
         fuzzy_results = []
         # for result in results:
         #     competency_code = result[9]  # Assuming Competency_Code is the second column
-        #     match, score = process.extractOne(skills, [competency_code])
-        #     # print("This is the match",match)
-        #     print("this is the score",score)
-            
+        #     skill_match = [process.extractOne(skill, [competency_code]) for skill in skill_list]
+        #     print("This is the match",_)
+        #     print("this is the score",skill_match)
+        #     # print("this is my match",match)
         #     # set threshold whatever kumran sir told later now its 80% high accuracy.
-        #     if score >= 80: # change this to 60 later 
+        #     if score[1] >= 80: # change this to 60 later 
         #         fuzzy_results.append(result)
 
         # include this code if we want to match all the skills with the required threshold
@@ -54,11 +55,11 @@ def search():
         for result in results:
             competency_code = result[9]  # Assuming Competency_Code is the second column
             skill_matches = [process.extractOne(skill, [competency_code]) for skill in skill_list]
-
+            print(skill_matches)
             # Check if all skills have a score above the threshold
-            if all(score >= 80 for _, score in skill_matches):
+            if any(score >= 70 for _, score in skill_matches):
                 fuzzy_results.append(result)
-                #*************************************
+        #         #*************************************
 
         print("Fuzzy Search Results:", fuzzy_results)
 
