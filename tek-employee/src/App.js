@@ -14,6 +14,9 @@ function App() {
   const [location, setLocation] = useState('');
   const [results, setResults] = useState([]);
   const [fuse, setFuse] = useState(null);
+  // const [skillset, setSkillset] = useState([]);  // New state for skillset
+  const [skillSetDict, setSkillSetDict] = useState({});
+
 
   // const optionList = [
   //   {value:,label:}
@@ -68,19 +71,35 @@ function App() {
     { value: 'Wash., DC', label: 'Wash., DC' },
   ];
   
-  const sortAndHighlight = (data) => {
+  const sortAndHighlight = (data,targetExperience) => {
     data.sort((a, b) => {
-      const ratingComparison = b[14] - a[14];
-      const experienceComparison = b[13] - a[13];
-      const sumComparison = (b[13] + b[14]) - (a[13] + a[14]);
-      return sumComparison > 0 ? sumComparison : ratingComparison !== 0 ? ratingComparison : experienceComparison;
+      // Compare both rating and experience
+      const ratingComparison = b[13] - a[13]; // Assuming rating is at index 14
+      const experienceComparison = a[12] - b[12]; // Assuming years of experience is at index 13
+      const availabilityComparison = b[14] - a[14]; // Assuming availability percentage is at index 15
+ 
+    // Prioritize entries with experience greater than or equal to the target experience
+    if (a[12] >= targetExperience && b[12] < targetExperience) {
+      return -1; // Move entry A up
+    } else if (a[12] < targetExperience && b[12] >= targetExperience) {
+      return 1; // Move entry B up
+    }
+ 
+    if (a[12] >= targetExperience && b[12] >= targetExperience) {
+      if (availabilityComparison !== 0) {
+        return availabilityComparison; // Higher availability comes first
+      }
+    }
+ 
+    // If both have experience greater than or equal to the target experience, compare by rating
+    return experienceComparison === 0 ? ratingComparison : experienceComparison;
     });
-
-    const highlightedData = data.map((item, index, array) => ({
+ 
+    const highlightedData = data.map((item,index,array) => ({
       ...item,
-      highlight: index < 5,
+      highlight: index<5,
     }));
-
+ 
     return highlightedData;
   };
 
@@ -94,8 +113,12 @@ function App() {
         location,
       });
 
-      if (response.data && Array.isArray(response.data)) {
-        setResults(response.data);
+      if (response.data && Array.isArray(response.data.fuzzy_results)) {
+        setResults(response.data.fuzzy_results);
+        // setSkillset(response.data.skillset); //remove this line later it doesnot work
+        setSkillSetDict(response.data.skillSetDict); // Set skillSetDict in state
+
+
 
         // Initialize Fuse with the updated skill data
         // const options = {
@@ -114,7 +137,7 @@ function App() {
 
   const handleBestFitClick = () => {
     if (results.length > 0) {
-      const sortedAndHighlightedResults = sortAndHighlight(results);
+      const sortedAndHighlightedResults = sortAndHighlight(results,parseInt(experience, 10));
       setResults(sortedAndHighlightedResults);
     } else {
       console.warn('No results to sort and highlight.');
@@ -124,20 +147,21 @@ function App() {
   const handleDownloadExcel = () => {
     const excelData = results.map((result) => ({
       'load_date': result[0],
-      'Employee ID': result[1],
-      'Resource Name': result[2],
-      'Supervisor Name': result[3],
-      'RM Role': result[4],
-      'Pool Name': result[5],
-      'Practice Name': result[6],
-      'Location Name': result[7],
+      'Employee_ID': result[1],
+      'Resource_Name': result[2],
+      'Supervisor_Name': result[3],
+      'RM_Role': result[4],
+      'Pool_Name': result[5],
+      'Practice_Name': result[6],
+      'Location_Name': result[7],
       'Email': result[8],
-      'Competency Code': result[9],
-      'Competency Desciption': result[10],
-      'years acquired': result[11],
-      'years used': result[12],
-      'years of experience': result[13],
-      'Rating': result[14]
+      'Competency_Code': result[9],
+      // 'Competency_Desciption': result[10],
+      'years_acquired': result[10],
+      'years_used': result[11],
+      'years_of_experience': result[12],
+      'Rating': result[13],
+      'Interest_Level' :result[14]
     }));
 
     const ws = XLSX.utils.json_to_sheet(excelData);
@@ -166,6 +190,7 @@ function App() {
       console.log("This is my filtered results",filteredResults)
       setResults(filteredResults);
     }
+    console.log("this is my results",results)
   };
 
   return (
@@ -205,10 +230,10 @@ function App() {
         <button type="submit" style={{ marginRight: '1rem' }}>
           Search
         </button>
-        <button type="button" onClick={handleBestFitClick} style={{ marginRight: '1 rem' }}>
+        <button type="button" onClick={handleBestFitClick} style={{ marginRight: '1rem' }}>
           Best Fit
         </button>
-        <button type="button" onClick={handleDownloadExcel}>
+        <button type="button" onClick={handleDownloadExcel} >
           Download
         </button>
       </form>
@@ -220,21 +245,25 @@ function App() {
             <table className="results-table">
               <thead>
                 <tr>
-                  <th>Employee ID</th>
-                  <th>Resource Name</th>
-                  <th>years of experience</th>
-                  <th>Rating</th>
                   <th>load_date</th>
-                  <th>Supervisor Name</th>
-                  <th>RM Role</th>
-                  <th>Pool Name</th>
-                  <th>Practice Name</th>
-                  <th>Location Name</th>
+                  <th>Employee_ID</th>
+                  <th>Resource_Name</th>
+                  <th>Supervisor_Name</th>
+                  <th>RM_Role</th>
+                  <th>Pool_Name</th>
+                  <th>Practice_Name</th>
+                  <th>Location_Name</th>
                   <th>Email</th>
-                  <th>Competency Code</th>
-                  <th>Competency Desciption</th>
-                  <th>years acquired</th>
-                  <th>years used</th>
+                  <th>Competency_Code</th>
+                  {/* <th>Competency Desciption</th> */}
+                  <th>years_acquired</th>
+                  <th>years_used</th>
+                  <th>years_of_experience</th>
+                  <th>Rating</th>
+                  <th>Interest_Level</th>
+                  <th>Availibility</th>
+                  <th>skillset</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -246,11 +275,12 @@ function App() {
                       color: result.highlight ? 'black' : 'inherit',
                     }}
                   >
+                    <td>{result[0]}</td>
                     <td>{result[1]}</td>
                     <td>{result[2]}</td>
-                    <td>{result[13]}</td>
-                    <td>{result[14]}</td>
-                    <td>{result[0]}</td>
+                    
+                    
+                    
                     <td>{result[3]}</td>
                     <td>{result[4]}</td>
                     <td>{result[5]}</td>
@@ -261,6 +291,13 @@ function App() {
                     <td>{result[10]}</td>
                     <td>{result[11]}</td>
                     <td>{result[12]}</td>
+                    <td>{result[13]}</td>
+                    <td>{result[14]}</td>
+                    <td>{(result[15] * 100).toFixed(2)}%</td>
+                    {/* <td>{skillSetDict[result[1]]}</td> Display skillSet_dict values */}
+                    {/* console.log('Employee_ID:', result[1]);
+console.log('SkillSetDict:', skillSetDict); */}
+
                   </tr>
                 ))}
               </tbody>
