@@ -76,7 +76,7 @@ function App() {
       // Compare both rating and experience
       const ratingComparison = b[13] - a[13]; // Assuming rating is at index 14
       const experienceComparison = a[12] - b[12]; // Assuming years of experience is at index 13
-      const availabilityComparison = b[14] - a[14]; // Assuming availability percentage is at index 15
+      const availabilityComparison = b[15] - a[15]; // Assuming availability percentage is at index 15
  
     // Prioritize entries with experience greater than or equal to the target experience
     if (a[12] >= targetExperience && b[12] < targetExperience) {
@@ -112,9 +112,11 @@ function App() {
         experience,
         location,
       });
+      console.log('Type of Employee ID:', typeof response.data.new_data[0][1]);
 
-      if (response.data && Array.isArray(response.data.fuzzy_results)) {
-        setResults(response.data.fuzzy_results);
+
+      if (response.data && Array.isArray(response.data.new_data)) {
+        setResults(response.data.new_data);
         // setSkillset(response.data.skillset); //remove this line later it doesnot work
         setSkillSetDict(response.data.skillSetDict); // Set skillSetDict in state
 
@@ -266,7 +268,10 @@ function App() {
 
                 </tr>
               </thead>
+
               <tbody>
+              console.log('Results:', results);
+              console.log('SkillSetDict:', skillSetDict);
                 {results.map((result, index) => (
                   <tr
                     key={index}
@@ -276,7 +281,10 @@ function App() {
                     }}
                   >
                     <td>{result[0]}</td>
-                    <td>{result[1]}</td>
+                    <td>{Number(result[1])}</td>
+                    {/* {console.log('Employee ID Type:',typeof String(results[1]))} */}
+                    {console.log('Employee ID Type:', typeof (result && result[1]))}
+
                     <td>{result[2]}</td>
                     
                     
@@ -294,10 +302,18 @@ function App() {
                     <td>{result[13]}</td>
                     <td>{result[14]}</td>
                     <td>{(result[15] * 100).toFixed(2)}%</td>
-                    {/* <td>{skillSetDict[result[1]]}</td> Display skillSet_dict values */}
-                    {/* console.log('Employee_ID:', result[1]);
-console.log('SkillSetDict:', skillSetDict); */}
-
+                    <td>{result[16]}</td>
+                    
+                    {/* <td>{skillSetDict[Number(result[1])] ? (
+        <div>
+          {skillSetDict[Number(result[1])].map((skill, skillIndex) => (
+            <div key={skillIndex}>{skill}</div>
+          ))}
+        </div>
+      ) : (
+        <div>No skills found for EMployee ID: {results[1]}</div>
+      )}
+    </td> */}
                   </tr>
                 ))}
               </tbody>
