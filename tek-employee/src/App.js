@@ -270,8 +270,8 @@ function App() {
               </thead>
 
               <tbody>
-              console.log('Results:', results);
-              console.log('SkillSetDict:', skillSetDict);
+              {/* console.log('Results:', results);
+              console.log('SkillSetDict:', skillSetDict); */}
                 {results.map((result, index) => (
                   <tr
                     key={index}
@@ -283,7 +283,7 @@ function App() {
                     <td>{result[0]}</td>
                     <td>{Number(result[1])}</td>
                     {/* {console.log('Employee ID Type:',typeof String(results[1]))} */}
-                    {console.log('Employee ID Type:', typeof (result && result[1]))}
+                    {/* {console.log('Employee ID Type:', typeof (result && result[1]))} */}
 
                     <td>{result[2]}</td>
                     

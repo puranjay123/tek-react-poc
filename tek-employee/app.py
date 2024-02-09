@@ -33,7 +33,7 @@ def search():
         cursor.execute(query, (experience, f'%{location}%'))
         results = cursor.fetchall()
         results = [list(t) for t in results]
-        print("This is my results",results)
+        # print("This is my results",results)
         
 
         # skill_list = [skill.strip() for skill in skills.split(',')]
@@ -57,10 +57,10 @@ def search():
         
         
         skillSet_dict ={}
-        curr_list=[]
+        # curr_list=[]
         for employee_data in fuzzy_results:
             if employee_data[1] in skillSet_dict:
-                
+                curr_list=skillSet_dict[employee_data[1]]
                 if employee_data[9] not in curr_list:
                     curr_list =skillSet_dict[employee_data[1]]
                     curr_list.append(employee_data[9])
@@ -92,9 +92,13 @@ def search():
         final_data=newdiff(fuzzy_results)
         for sublist in final_data:
             employee_id= sublist[1]
-            sublist.append(skillSet_dict.get(employee_id,None))
+            # sublist.extend([','.join(skillSet_dict.)])
+            skill_set_list=skillSet_dict.get(employee_id, [])
+            print("this is my skill_set_list",skill_set_list)
+            sublist.extend([','.join(skill_set_list)])
+
             # sublist[-1] = skillSet_dict
-        print("This is my final_data",final_data)
+        # print("This is my final_data",json.dumps(final_data,indent=4))
         conn.close()
 
         # print(curr_list)
