@@ -74,9 +74,9 @@ function App() {
   const sortAndHighlight = (data,targetExperience) => {
     data.sort((a, b) => {
       // Compare both rating and experience
-      const ratingComparison = b[13] - a[13]; // Assuming rating is at index 14
+      // const ratingComparison = b[13] - a[13]; // Assuming rating is at index 14
       const experienceComparison = a[12] - b[12]; // Assuming years of experience is at index 13
-      const availabilityComparison = b[15] - a[15]; // Assuming availability percentage is at index 15
+      const availabilityComparison = a[15] - b[15]; // Assuming availability percentage is at index 15
  
     // Prioritize entries with experience greater than or equal to the target experience
     if (a[12] >= targetExperience && b[12] < targetExperience) {
@@ -85,14 +85,14 @@ function App() {
       return 1; // Move entry B up
     }
  
-    if (a[12] >= targetExperience && b[12] >= targetExperience) {
-      if (availabilityComparison !== 0) {
-        return availabilityComparison; // Higher availability comes first
-      }
-    }
+    // if (a[12] >= targetExperience && b[12] >= targetExperience) {
+    //   if (availabilityComparison !== 0) {
+    //     return availabilityComparison; // Higher availability comes first
+    //   }
+    // }
  
     // If both have experience greater than or equal to the target experience, compare by rating
-    return experienceComparison === 0 ? ratingComparison : experienceComparison;
+    return experienceComparison === 0 ? availabilityComparison : experienceComparison;
     });
  
     const highlightedData = data.map((item,index,array) => ({
@@ -116,19 +116,12 @@ function App() {
 
 
       if (response.data && Array.isArray(response.data.new_data)) {
-        setResults(response.data.new_data);
+        const sortedAndHighlightedResults = sortAndHighlight(response.data.new_data,parseInt(experience, 10));
+        setResults(sortedAndHighlightedResults);
+ 
+        // setResults(response.data.new_data);
         // setSkillset(response.data.skillset); //remove this line later it doesnot work
-        setSkillSetDict(response.data.skillSetDict); // Set skillSetDict in state
-
-
-
-        // Initialize Fuse with the updated skill data
-        // const options = {
-        //   keys: ['skills'],
-        //   includeScore: true,
-        // };
-        // const fuseInstance = new Fuse(response.data, options);
-        // setFuse(fuseInstance);
+        setSkillSetDict(sortedAndHighlightedResults.skillSetDict); // Set skillSetDict in state
       } else {
         console.error('Invalid response format:', response);
       }
@@ -137,14 +130,14 @@ function App() {
     }
   };
 
-  const handleBestFitClick = () => {
-    if (results.length > 0) {
-      const sortedAndHighlightedResults = sortAndHighlight(results,parseInt(experience, 10));
-      setResults(sortedAndHighlightedResults);
-    } else {
-      console.warn('No results to sort and highlight.');
-    }
-  };
+  // const handleBestFitClick = () => {
+  //   if (results.length > 0) {
+  //     const sortedAndHighlightedResults = sortAndHighlight(results,parseInt(experience, 10));
+  //     setResults(sortedAndHighlightedResults);
+  //   } else {
+  //     console.warn('No results to sort and highlight.');
+  //   }
+  // };
 
   const handleDownloadExcel = () => {
     const excelData = results.map((result) => ({
@@ -232,9 +225,9 @@ function App() {
         <button type="submit" style={{ marginRight: '1rem' }}>
           Search
         </button>
-        <button type="button" onClick={handleBestFitClick} style={{ marginRight: '1rem' }}>
+        {/* <button type="button" onClick={handleBestFitClick} style={{ marginRight: '1rem' }}>
           Best Fit
-        </button>
+        </button> */}
         <button type="button" onClick={handleDownloadExcel} >
           Download
         </button>
@@ -247,22 +240,22 @@ function App() {
             <table className="results-table">
               <thead>
                 <tr>
-                  <th>load_date</th>
+                  {/* <th>load_date</th> */}
                   <th>Employee_ID</th>
                   <th>Resource_Name</th>
                   <th>Supervisor_Name</th>
                   <th>RM_Role</th>
-                  <th>Pool_Name</th>
+                  {/* <th>Pool_Name</th> */}
                   <th>Practice_Name</th>
                   <th>Location_Name</th>
                   <th>Email</th>
                   <th>Competency_Code</th>
                   {/* <th>Competency Desciption</th> */}
-                  <th>years_acquired</th>
-                  <th>years_used</th>
+                  {/* <th>years_acquired</th> */}
+                  {/* <th>years_used</th> */}
                   <th>years_of_experience</th>
                   <th>Rating</th>
-                  <th>Interest_Level</th>
+                  {/* <th>Interest_Level</th> */}
                   <th>Availibility</th>
                   <th>skillset</th>
 
@@ -280,7 +273,7 @@ function App() {
                       color: result.highlight ? 'black' : 'inherit',
                     }}
                   >
-                    <td>{result[0]}</td>
+                    {/* <td>{result[0]}</td> */}
                     <td>{Number(result[1])}</td>
                     {/* {console.log('Employee ID Type:',typeof String(results[1]))} */}
                     {/* {console.log('Employee ID Type:', typeof (result && result[1]))} */}
@@ -290,18 +283,18 @@ function App() {
                     
                     
                     <td>{result[3]}</td>
-                    <td>{result[4]}</td>
+                    {/* <td>{result[4]}</td> */}
                     <td>{result[5]}</td>
                     <td>{result[6]}</td>
                     <td>{result[7]}</td>
                     <td>{result[8]}</td>
                     <td>{result[9]}</td>
-                    <td>{result[10]}</td>
-                    <td>{result[11]}</td>
+                    {/* <td>{result[10]}</td> */}
+                    {/* <td>{result[11]}</td> */}
                     <td>{result[12]}</td>
                     <td>{result[13]}</td>
-                    <td>{result[14]}</td>
-                    <td>{(result[15] * 100).toFixed(2)}%</td>
+                    {/* <td>{result[14]}</td> */}
+                    <td>{(100-(result[15] * 100)).toFixed(2)}%</td>           
                     <td>{result[16]}</td>
                     
                     {/* <td>{skillSetDict[Number(result[1])] ? (

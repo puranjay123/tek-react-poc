@@ -53,12 +53,85 @@ def search():
                 fuzzy_results.append(result)
         #         #*************************************
 
-        # print("Fuzzy Search Results:",fuzzy_results)
+        # Code for multiple competency code
+        competency_dict = {}
+        threshold =70
+        # skill_list = [skill.strip() for skill in skills.split(',')]
+        for x in fuzzy_results:
+            if x[1] in competency_dict:
+                new_cur_list = competency_dict[x[1]]
+                skill_matches = [process.extractOne(skill,[x[9]]) for skill in skill_list]
+                if any(score >= threshold for _, score in skill_matches):
+                # if any(skill.lower() in x[9].lower() for skill in skill_list):  # Check if any skill partially matches x[9]
+                   if x[9] not in new_cur_list:
+                        new_cur_list.append(x[9])
+                        competency_dict[x[1]] = new_cur_list
+            else:
+                competency_new_list = []
+                skill_matches = [process.extractOne(skill, [x[9]]) for skill in skill_list]
+                if any(score >= threshold for _, score in skill_matches):
+                # if any(skill.lower() in x[9].lower() for skill in skill_list):
+                    competency_new_list.append(x[9])
+                competency_dict[x[1]] = competency_new_list
+                print("my new list", competency_dict)
+
+
+        # for x in fuzzy_results:
+        #     if x[1] in competency_dict:
+        #         new_cur_list=competency_dict[x[1]]
+        #         if x[9] in skill_list and x[9] not in new_cur_list:
+        #             new_cur_list.append(x[9])
+        #             competency_dict[x[1]]=new_cur_list
+        #             # new_cur_list=competency_dict[x[1]] #not sure to repeat this line added this for edge case where same skills is repaeting
+        #             new_cur_list.append(x[9])
+        #             competency_dict[x[1]] = new_cur_list
+        #             # print("This is my cur_list",new_cur_list)
+        #         else:
+        #             continue
+        #     else:
+        #         competency_new_list =[]
+        #         if x[9] in skill_list :
+        #             competency_new_list.append(x[9])
+        #         competency_dict[x[1]] = competency_new_list
+        #         print("my new list",competency_dict)
+
+        # appeding Multiple competnecy  in comepetenc_Code       
         
+
+                # competency_new_list = [x[9]]
+                # competency_dict[x[1]]=competency_new_list
+
+        # code for multiple ratings for the skill
+        rating_dict={}
+        for x in fuzzy_results:
+            if x[1] in rating_dict:
+                curr_dict=rating_dict[x[1]]
+                # print(curr_dict)
+                if x[9] not in curr_dict.keys():
+                    curr_dict[x[9]]=x[13]
+                    rating_dict[x[1]]=curr_dict
+                else:
+                    continue
+            else:
+                new_dict={}
+                new_dict[x[9]]=x[13]
+                # print("this is my new dict",new_dict)
+                rating_dict[x[1]]=new_dict
+                print("this is rating dict",rating_dict)
+                
+
+                
         
+
+
+        print("Fuzzy Search Results:",fuzzy_results)
+                
+        # create a empty dictionary map it with employye ID and match with employee ID; skills
+        
+        #  this is returning the 
         skillSet_dict ={}
         # curr_list=[]
-        for employee_data in fuzzy_results:
+        for employee_data in results:
             if employee_data[1] in skillSet_dict:
                 curr_list=skillSet_dict[employee_data[1]]
                 if employee_data[9] not in curr_list:
@@ -94,8 +167,24 @@ def search():
             employee_id= sublist[1]
             # sublist.extend([','.join(skillSet_dict.)])
             skill_set_list=skillSet_dict.get(employee_id, [])
-            print("this is my skill_set_list",skill_set_list)
+            # print("this is my skill_set_list",skill_set_list)
             sublist.extend([','.join(skill_set_list)])
+        # compenetncy code appeding
+        for sublist in final_data:
+            employee_id= sublist[1]
+            # sublist.extend([','.join(skillSet_dict.)])
+            skill_set_list=competency_dict.get(employee_id, [])
+            # print("this is my skill_set_list",skill_set_list)
+            sublist[9] = ','.join(skill_set_list)
+        # rating appending
+        for sublist in final_data:
+            employee_id = sublist[1]
+            rating_data = rating_dict.get(employee_id, {})
+            # Assuming you want to concatenate the ratings for all skills
+            rating_values = [f" {rating}" for skill, rating in rating_data.items()]
+            sublist[13] = ','.join(rating_values)
+
+            
 
             # sublist[-1] = skillSet_dict
         # print("This is my final_data",json.dumps(final_data,indent=4))
