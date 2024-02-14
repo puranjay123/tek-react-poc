@@ -23,14 +23,16 @@ def search():
         skills = data.get('skills')
         experience = data.get('experience')
         location = data.get('location')
+        location = tuple(location)
+        print("This is my location",location)
            
 
         conn = sqlite3.connect('C:\\Users\\pkwatra\\OneDrive - ALLEGIS GROUP\\RESOURCE PLANNER HELPER\\resourceplanner.db')
         cursor = conn.cursor()
 
         # Use process.extractOne to find the best match for skills
-        query = "select c.*,a.B___C_Utilization____Last_week from competency c full outer join Availability a on c.Employee_ID==a.Empl_ID WHERE Years_of_Work_Experience >= ? AND location_Name LIKE ?"
-        cursor.execute(query, (experience, f'%{location}%'))
+        query = "SELECT c.*, a.B___C_Utilization____Last_week FROM competency c FULL OUTER JOIN Availability a ON c.Employee_ID == a.Empl_ID WHERE Years_of_Work_Experience >= ? AND location_Name IN ({})".format(','.join(['?' for _ in location]))
+        cursor.execute(query, (experience, *location))
         results = cursor.fetchall()
         results = [list(t) for t in results]
         # print("This is my results",results)
@@ -73,7 +75,7 @@ def search():
                 # if any(skill.lower() in x[9].lower() for skill in skill_list):
                     competency_new_list.append(x[9])
                 competency_dict[x[1]] = competency_new_list
-                print("my new list", competency_dict)
+                # print("my new list", competency_dict)
 
 
         # for x in fuzzy_results:
@@ -117,14 +119,14 @@ def search():
                 new_dict[x[9]]=x[13]
                 # print("this is my new dict",new_dict)
                 rating_dict[x[1]]=new_dict
-                print("this is rating dict",rating_dict)
+                # print("this is rating dict",rating_dict)
                 
 
                 
         
 
 
-        print("Fuzzy Search Results:",fuzzy_results)
+        # print("Fuzzy Search Results:",fuzzy_results)
                 
         # create a empty dictionary map it with employye ID and match with employee ID; skills
         

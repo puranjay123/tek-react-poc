@@ -9,12 +9,13 @@
 .search-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .results-container {
   margin-top: 20px;
 }
+
 
 .results-box {
   max-height: 400px; /* Set your preferred max height */
@@ -38,4 +39,14 @@
 .highlighted-row {
   background-color: yellow;
   color: black;
+}
+/* .custom-multiselect .multiselect-selected-text {
+  width: 10px !important; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} */
+
+.multiselectSarchbox{
+  width: 250px;
 }

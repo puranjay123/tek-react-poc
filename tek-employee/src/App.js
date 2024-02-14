@@ -3,7 +3,9 @@ import axios from 'axios';
 import './App.css';
 import * as XLSX from 'xlsx';
 import Fuse from 'fuse.js';
-import Select from 'react-select';
+// import Select from 'react-select';
+import Multiselect from 'multiselect-react-dropdown';
+
 
 // import Select from "react-select";
 // import SearchBar from '.';
@@ -215,12 +217,23 @@ function App() {
         />
   
         <label htmlFor="location"><br />Location:</label>
-        <Select
-          options={locationOptions}
-          value={locationOptions.find((option) => option.value === location)}
-          onChange={(selectedOption) => setLocation(selectedOption.value)}
-          styles={{ control: (provided) => ({ ...provided, width: '190px' }) }}
+        <div class="multiselectSarchbox">
+        <Multiselect
+        className="custom-multiselect" // Apply the CSS class here
+
+        options={locationOptions}
+        selectedValues={locationOptions.find((option) => option.value === location)} // Assuming `location` is an array of selected values
+        onSelect={(selectedList) => setLocation(selectedList.map(option => option.value))}
+        onRemove={(selectedList) => setLocation(selectedList.map(option => option.value))}
+        displayValue="value"
+        //style={{ width: '100px' }}
+          // options={locationOptions}
+          // value={locationOptions.find((option) => option.value === location)}
+          // onChange={(selectedOption) => setLocation(selectedOption.value)}
+          // styles={{ control: (provided) => ({ ...provided, width: '190px' }) }}
         />
+        </div>
+        
   
         <button type="submit" style={{ marginRight: '1rem' }}>
           Search

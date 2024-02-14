@@ -9,6 +9,7 @@
     "axios": "^1.6.7",
     "fuse.js": "^7.0.0",
     "levenshtein-edit-distance": "^3.0.1",
+    "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
