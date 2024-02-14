@@ -1,7 +1,12 @@
+
+Resource planner for employees: In this Application, we are aiming to get Top employees based on certain condition and filters in which we have a best fit function where we are getting top employees based on experience and rating and returning the result in this tabular format where you can see the sample output in below image
+
 issue List:
 05/24
-* If I am seacrhing multiple skills and there is a thrshold which skills you want to give more priority than we have to decide that as well
-we were checking if any of the skills had a matching score above 80% for a given competency code. This means that if at least one skill had a score above the threshold, the competency code would be included in fuzzy_results. However, this might lead to cases where one skill has a good match, but others don't.
+* If I am searching for multiple skills and there is a threshold which skills you want to give more priority, we have to decide that we were also checking if any of the skills had a matching score above 80% for a given competency code. This means that if at least one skill had a score above the threshold, the competency code would be included in fuzzy_results. However, this might lead to cases where one skill has a good match, but others don't.(resolved)
+
+![image](https://github.com/puranjay1234/tek-react-poc/assets/55429956/08ad5720-dd45-4d21-99b7-e11a9284a9b7)
+
 
 
 
