@@ -10,8 +10,6 @@
     "bootstrap": "^5.3.3",
     "fuse.js": "^7.0.0",
     "levenshtein-edit-distance": "^3.0.1",
-    "multi-select-dropdown": "^0.0.2",
-    "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.2",
