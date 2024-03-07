@@ -1,41 +1,74 @@
 /* App.css */
-
+ 
 .app-container {
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
 }
-
+ 
 .search-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+  /* display: flex; */
+  /*flex-direction: column;*/
+  margin-bottom: 10px;
 }
-
+ 
 .results-container {
   margin-top: 20px;
 }
-
+ 
+ 
 .results-box {
   max-height: 400px; /* Set your preferred max height */
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 2px;
 }
-
+ 
 .results-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
-
+ 
 .results-table th, .results-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
-
+ 
 .highlighted-row {
   background-color: yellow;
   color: black;
 }
+/* .custom-multiselect .multiselect-selected-text {
+  width: 10px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} */
+ 
+.multiselectSarchbox{
+  width: 250px;
+}
+
+.filters{
+  display:flex;
+  flex-direction:row;
+  justify-content: space-evenly;
+}
+
+.buttonsOfSearchAndDownload{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.headerRow{
+  background-color: #40A2E3
+}
+
+.searchbar{
+  width: 120px;
+}
+
